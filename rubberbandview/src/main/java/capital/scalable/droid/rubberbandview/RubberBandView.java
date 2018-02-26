@@ -138,7 +138,7 @@ public class RubberBandView extends View {
             minRubberWidth = typedArray.getDimensionPixelSize(R.styleable.RubberBandView_minRubberWidth, DEFAULT_MIN_RUBBER_WIDTH);
             maxRubberWidth = typedArray.getDimensionPixelSize(R.styleable.RubberBandView_maxRubberWidth, DEFAULT_MAX_RUBBER_WIDTH);
             flatnessRatio = typedArray.getFloat(R.styleable.RubberBandView_loosenessRatio, DEFAULT_LOOSENESS_RATIO);
-            vibrationPeakAmplitude = typedArray.getDimensionPixelSize(R.styleable.RubberBandView_maxRubberWidth, DEFAULT_VIBRATION_PEAK_AMPLITUDE);
+            vibrationPeakAmplitude = typedArray.getDimensionPixelSize(R.styleable.RubberBandView_vibrationPeakAmplitude, DEFAULT_VIBRATION_PEAK_AMPLITUDE);
             typedArray.recycle();
         }
 
