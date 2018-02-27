@@ -15,6 +15,7 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
@@ -37,16 +38,16 @@ public class RubberBandView extends View {
     private static final Interpolator POSITION_INTERPOLATOR = new OvershootInterpolator(1f);
 
     /**
-     * Default value, in px, of the width of rubber,
+     * Default value, in dp, of the width of rubber,
      * when it is stretched to its max
      */
-    private static final int DEFAULT_MIN_RUBBER_WIDTH = 10;
+    private static final int DEFAULT_MIN_RUBBER_WIDTH = 4;
 
     /**
-     * Default value, in px, of the width of rubber,
+     * Default value, in dp, of the width of rubber,
      * when it is at rest
      */
-    private static final int DEFAULT_MAX_RUBBER_WIDTH = 15;
+    private static final int DEFAULT_MAX_RUBBER_WIDTH = 5;
 
     /**
      * Default flatness ratio
@@ -54,9 +55,9 @@ public class RubberBandView extends View {
     private static final float DEFAULT_LOOSENESS_RATIO = 0.2f;
 
     /**
-     * Default value, in px, of the peak amplitude of each vibration
+     * Default value, in dp, of the peak amplitude of each vibration
      */
-    private static final int DEFAULT_VIBRATION_PEAK_AMPLITUDE = 10;
+    private static final int DEFAULT_VIBRATION_PEAK_AMPLITUDE = 3;
 
     /**
      * Duration of animation that sets the position of the rubberview
@@ -84,10 +85,10 @@ public class RubberBandView extends View {
     private int maxRubberWidth;
 
     /**
-     * Ratio that determines how flat the curve will be.
+     * Ratio that determines how loose the rubber band will be.
      * Must be between [0,1[
      */
-    private float flatnessRatio;
+    private float loosenessRatio;
 
     /**
      * Peak amplitude of each vibration
@@ -131,14 +132,18 @@ public class RubberBandView extends View {
 
     private void initView(Context context, @Nullable AttributeSet attrs) {
         int rubberColor = getThemeAccentColor(context);
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        minRubberWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_MIN_RUBBER_WIDTH, metrics);
+        maxRubberWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_MAX_RUBBER_WIDTH, metrics);
+        vibrationPeakAmplitude = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_VIBRATION_PEAK_AMPLITUDE, metrics);
 
         if (attrs != null) {
             TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.RubberBandView);
             rubberColor = typedArray.getColor(R.styleable.RubberBandView_rubberColor, rubberColor);
-            minRubberWidth = typedArray.getDimensionPixelSize(R.styleable.RubberBandView_minRubberWidth, DEFAULT_MIN_RUBBER_WIDTH);
-            maxRubberWidth = typedArray.getDimensionPixelSize(R.styleable.RubberBandView_maxRubberWidth, DEFAULT_MAX_RUBBER_WIDTH);
-            flatnessRatio = typedArray.getFloat(R.styleable.RubberBandView_loosenessRatio, DEFAULT_LOOSENESS_RATIO);
-            vibrationPeakAmplitude = typedArray.getDimensionPixelSize(R.styleable.RubberBandView_vibrationPeakAmplitude, DEFAULT_VIBRATION_PEAK_AMPLITUDE);
+            minRubberWidth = typedArray.getDimensionPixelSize(R.styleable.RubberBandView_minRubberWidth, minRubberWidth);
+            maxRubberWidth = typedArray.getDimensionPixelSize(R.styleable.RubberBandView_maxRubberWidth, maxRubberWidth);
+            loosenessRatio = typedArray.getFloat(R.styleable.RubberBandView_loosenessRatio, DEFAULT_LOOSENESS_RATIO);
+            vibrationPeakAmplitude = typedArray.getDimensionPixelSize(R.styleable.RubberBandView_vibrationPeakAmplitude, vibrationPeakAmplitude);
             typedArray.recycle();
         }
 
@@ -337,8 +342,6 @@ public class RubberBandView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
-
         int strokeWidth = (int) ((1 - positionHeightRatio()) * (maxRubberWidth - minRubberWidth) + minRubberWidth);
         paint.setStrokeWidth(strokeWidth);
         if (currentPosition == 0) {
@@ -356,7 +359,7 @@ public class RubberBandView extends View {
         }
 
         float centerX = getWidth() / 2;
-        float cubicPadding = getWidth() * flatnessRatio;
+        float cubicPadding = getWidth() * loosenessRatio;
         float top = strokeWidth / 2;
         path.reset();
         path.moveTo(0, top);
