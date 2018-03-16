@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="RubberBandView">
+        <attr name="rubberColor" format="color" />
+        <attr name="minRubberWidth" format="dimension" />
+        <attr name="maxRubberWidth" format="dimension" />
+        <attr name="loosenessRatio" format="float" />
+        <attr name="vibrationPeakAmplitude" format="dimension" />
+    </declare-styleable>
+</resources>
