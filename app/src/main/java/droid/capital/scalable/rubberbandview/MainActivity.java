@@ -13,8 +13,6 @@ import capital.scalable.droid.rubberbandview.RubberBandView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String MAX_SELECTION = "MaxSelection";
-    private static final String CURRENT_SELECTION = "CurrentSelection";
     private TextView selectedValue;
     private RubberBandView rubberBandView;
 
@@ -58,21 +56,5 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateSelectedValue(int value) {
         selectedValue.setText("Selected value = " + value);
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        outState.putInt(CURRENT_SELECTION, rubberBandView.getSelection());
-        outState.putInt(MAX_SELECTION, rubberBandView.getMaxSelection());
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        int selection = savedInstanceState.getInt(CURRENT_SELECTION);
-        rubberBandView.setSelection(selection);
-        rubberBandView.setMaxSelection(savedInstanceState.getInt(MAX_SELECTION));
-        updateSelectedValue(selection);
     }
 }
