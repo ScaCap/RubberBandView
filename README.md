@@ -19,7 +19,7 @@ In your layout file:
 
 ### Max selectable value
 
-The API of the custom view is similar to that of Android's [ProgressBar](https://developer.android.com/reference/android/widget/ProgressBar.html). One must set the max selectable value, using:
+The API of the custom view is similar to that of Android's [ProgressBar](https://developer.android.com/reference/android/widget/ProgressBar.html). You must set the max selectable value, using:
 
 ```
 RubberBandView rubberbandView = findViewById(R.id.rubberBandView);
