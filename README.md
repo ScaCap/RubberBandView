@@ -12,17 +12,21 @@ In your layout file:
 
 ```
 <capital.scalable.droid.rubberbandview.RubberBandView
+    android:id="@+id/rubberBandView"
     android:layout_width="match_parent"
     android:layout_height="match_parent" />
 ```
 
 ### Max selectable value
 
-To configure the max selectable value:
+The API of the custom view is similar to that of Android's [ProgressBar](https://developer.android.com/reference/android/widget/ProgressBar.html). One must set the max selectable value, using:
+
 ```
+RubberBandView rubberbandView = findViewById(R.id.rubberBandView);
 rubberBandView.setMaxSelection(10);
 ```
 
+This way, the user can select any value from the range [0,10].
 
 ### RubberBandListener
 
@@ -42,11 +46,29 @@ rubberBandView.setListener(new RubberBandListener() {
 });
 ```
 
+The `onSelectionFinished` event is triggered as soon as the user has lifted their finger off the view. Note that the value returned in that case is the final selected one.
+
 ### Vibration animation
 
 The view comes with a nudge animation, that encourages the user to interact with it.
-To configure it, supply your own [ValueAnimator](https://developer.android.com/reference/android/animation/ValueAnimator.html) through `rubberBandView.setVibrationAnimator()`
-To turn the animation off completely, simply set the vibration animator to null.
+
+![](screenshots/rubber_vibration.gif)
+
+The default animation uses a [ValueAnimator](https://developer.android.com/reference/android/animation/ValueAnimator.html), which looks like this:
+
+```
+vibrationAnimator = ValueAnimator.ofFloat(-1f, 1f, -0.5f, 0.5f, 0);
+vibrationAnimator.setInterpolator(new DecelerateInterpolator());
+vibrationAnimator.setRepeatCount(3);
+vibrationAnimator.setDuration(200 / 3);
+vibrationAnimator.setStartDelay(5000);
+```
+
+You can supply your own animator, using:
+
+`rubberBandView.setVibrationAnimator(customAnimator)`
+
+To turn the animation off completely, simply set the vibration animator to `null`.
 
 ### UI Customization
 
