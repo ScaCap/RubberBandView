@@ -85,7 +85,7 @@ These are the parameters that can be modified through xml:
     android:layout_height="match_parent" />
 ```
 
-- `loosenessRatio`: how loose the rubber needs to be. Must be in [0,1[ range. Defaults to 0.2
+- `loosenessRatio`: how loose the rubber needs to be. Must be in [0, 0.5] range. Defaults to 0.2
 - `rubberColor`: the color of the rubber. Defaults to the theme's `colorAccent`
 - `minRubberWidth`: the minimum width of the rubber band, in dp. This will be the width when the rubber band is pulled to its max.
 - `maxRubberWidth`: the maximum width of the rubber band, in dp. This will be the width when the rubber band is at rest.

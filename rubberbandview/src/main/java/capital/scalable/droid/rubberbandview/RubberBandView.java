@@ -86,7 +86,7 @@ public class RubberBandView extends View {
 
     /**
      * Ratio that determines how loose the rubber band will be.
-     * Must be between [0,1[
+     * Must be between [0, 0.5]
      */
     private float loosenessRatio;
 
