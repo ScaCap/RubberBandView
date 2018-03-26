@@ -52,7 +52,7 @@ public class RubberBandView extends View {
     /**
      * Default flatness ratio
      */
-    private static final float DEFAULT_LOOSENESS_RATIO = 0.2f;
+    private static final float DEFAULT_LOOSENESS_RATIO = 0.4f;
 
     /**
      * Default value, in dp, of the peak amplitude of each vibration
@@ -86,7 +86,7 @@ public class RubberBandView extends View {
 
     /**
      * Ratio that determines how loose the rubber band will be.
-     * Must be between [0,1[
+     * Must be between [0, 1]
      */
     private float loosenessRatio;
 
@@ -359,7 +359,7 @@ public class RubberBandView extends View {
         }
 
         float centerX = getWidth() / 2;
-        float cubicPadding = getWidth() * loosenessRatio;
+        float cubicPadding = centerX * loosenessRatio;
         float top = strokeWidth / 2;
         path.reset();
         path.moveTo(0, top);
